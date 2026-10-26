@@ -223,6 +223,15 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 /* Chiusura */
 .close .center{gap:22px}
 .email{font-size:clamp(1.3rem,4.4vw,2.4rem);font-weight:600;letter-spacing:-.02em;user-select:all;word-break:break-word;margin:0}
+/* Come funziona: selettore La prima volta / Ogni sessione */
+.tabs{display:inline-flex;gap:4px;padding:4px;margin-top:10px;border-radius:999px;background:var(--mist);border:1px solid var(--line-light)}
+.tabs button{font:inherit;font-size:.92rem;font-weight:600;color:var(--mute-light);background:none;border:0;border-radius:999px;padding:10px 22px;cursor:pointer;transition:background .15s ease,color .15s ease}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--fg-dark)}
+.tabpanel .steps{margin-top:clamp(32px,5vw,56px)}
+.steps-4{grid-template-columns:repeat(4,1fr)}
+@media (max-width:1000px){.steps-4{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:760px){.steps-4{grid-template-columns:1fr}}
+.tip{margin-top:28px;max-width:70ch}
 /* Stato in copertina */
 .status{display:inline-flex;align-items:center;gap:8px;margin:0;padding:6px 14px;border:1px solid rgba(255,255,255,.16);border-radius:999px;font-size:.78rem;font-weight:600;letter-spacing:.04em;color:#d6d6d8;background:rgba(255,255,255,.04)}
 .status .dot{width:7px;height:7px;border-radius:50%;background:#f5f5f4;box-shadow:0 0 0 3px rgba(255,255,255,.12)}
@@ -330,13 +339,28 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <div class="wrap">
     <div class="center">
       <p class="eyebrow" data-i18n="nav.how">Come funziona</p>
-      <h2 data-i18n="how.title">Avvisatore e app.<br>Tre passaggi.</h2>
+      <h2 data-i18n="how.title">Lo imposti una volta.<br>Poi lo fissi e peschi.</h2>
+      <div class="tabs" role="tablist" data-i18n-aria="aria.how" aria-label="Momenti d'uso">
+        <button type="button" role="tab" id="tab-first" aria-controls="panel-first" aria-selected="true" data-i18n="how.tab1">La prima volta</button>
+        <button type="button" role="tab" id="tab-session" aria-controls="panel-session" aria-selected="false" tabindex="-1" data-i18n="how.tab2">Ogni sessione</button>
+      </div>
     </div>
-    <ol class="steps">
-      <li><span class="n">01</span><h3 data-i18n="step1.t">Scarichi l'app</h3><p data-i18n="step1.p">Crei il tuo account. Ti serve anche quando cambi telefono.</p></li>
-      <li><span class="n">02</span><h3 data-i18n="step2.t">Fissi One al rod pod</h3><p data-i18n="step2.p">Un quarto di giro nell'attacco e si accende. Lo togli e si spegne.</p></li>
-      <li><span class="n">03</span><h3 data-i18n="step3.t">Regoli dal telefono</h3><p data-i18n="step3.p">Sensibilità, suoni e luci, per ogni avvisatore.</p></li>
-    </ol>
+    <div class="tabpanel" id="panel-first" role="tabpanel" aria-labelledby="tab-first">
+      <ol class="steps">
+        <li><span class="n">01</span><h3 data-i18n="f1s.t">Scarichi l'app e crei l'account</h3><p data-i18n="f1s.p">L'account ti serve anche quando cambi telefono.</p></li>
+        <li><span class="n">02</span><h3 data-i18n="f2s.t">Registri i tuoi avvisatori</h3><p data-i18n="f2s.p">Accendi One con un quarto di giro sull'attacco: l'app lo trova e lo registri. Da quel momento lo riconosce e si collega da sola.</p></li>
+        <li><span class="n">03</span><h3 data-i18n="f3s.t">Lo personalizzi una volta</h3><p data-i18n="f3s.p">Per ogni avvisatore scegli colori, suoni, volume e sensibilità, poi salvi. One tiene in memoria le impostazioni, anche a telefono spento.</p></li>
+      </ol>
+      <p class="small tip" data-i18n="how.tip">Consiglio: attiva la connessione automatica e concedi i permessi che l'app ti chiede. Così a ogni sessione si ricollega da sola.</p>
+    </div>
+    <div class="tabpanel" id="panel-session" role="tabpanel" aria-labelledby="tab-session" hidden>
+      <ol class="steps steps-4">
+        <li><span class="n">01</span><h3 data-i18n="s1s.t">Fissi One e si accende</h3><p data-i18n="s1s.p">Un quarto di giro sull'attacco del rod pod. L'app lo riconosce e si collega da sola.</p></li>
+        <li><span class="n">02</span><h3 data-i18n="s2s.t">Regoli dalla tenda, se serve</h3><p data-i18n="s2s.p">Volume e sensibilità dal telefono, con la batteria di ogni avvisatore sempre sotto controllo.</p></li>
+        <li><span class="n">03</span><h3 data-i18n="s3s.t">Alla partenza ti avvisa</h3><p data-i18n="s3s.p">Luci e suoni diversi a seconda della direzione della lenza, sull'avvisatore e sul telefono. Se il telefono è spento, One suona comunque.</p></li>
+        <li><span class="n">04</span><h3 data-i18n="s4s.t">A fine sessione lo togli</h3><p data-i18n="s4s.p">Si spegne da solo. Lo ricarichi in USB-C quando l'app ti avvisa che la batteria è bassa.</p></li>
+      </ol>
+    </div>
   </div>
 </section>
 
@@ -467,7 +491,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <div class="wrap">
     <div class="about-intro">
       <p class="eyebrow" data-i18n="nav.about">Chi siamo</p>
-      <h2 data-i18n="about.title">Dal medicale alla pesca.</h2>
+      <h2 data-i18n="about.title">Dalla protesica alla riva.</h2>
       <p class="lead" style="max-width:52ch" data-i18n="about.lead">Per anni abbiamo progettato dispositivi medicali che devono funzionare ogni giorno, senza eccezioni. Ora mettiamo la stessa cura in un avvisatore.</p>
     </div>
     <div class="founders">
@@ -584,11 +608,16 @@ const EN = {
   "alt.side":"Rever One, side view","alt.three":"Rever One, three-quarter view","alt.front":"Rever One, front view with LEDs on",
   "view.side":"Side","view.three":"Three-quarter","view.front":"Front",
   "color.black":"Matte black","color.white":"White",
-  "how.title":"Alarm and app.<br>Three steps.",
-  "ph.video":"[Video render · One slides into the rod pod mount, turns 90° and the LEDs light up]",
-  "step1.t":"Download the app","step1.p":"Create your account. You'll also need it when you change phone.",
-  "step2.t":"Mount One on the rod pod","step2.p":"A quarter turn in the mount and it switches on. Take it off and it switches off.",
-  "step3.t":"Adjust from your phone","step3.p":"Sensitivity, sounds and lights, for every alarm.",
+  "how.title":"Set it up once.<br>Then mount it and fish.",
+  "aria.how":"When you use it","how.tab1":"The first time","how.tab2":"Every session",
+  "f1s.t":"Download the app and create your account","f1s.p":"You'll also need the account when you change phone.",
+  "f2s.t":"Register your alarms","f2s.p":"Switch One on with a quarter turn in the mount: the app finds it and you register it. From then on it recognises it and connects on its own.",
+  "f3s.t":"Customise it once","f3s.p":"For each alarm choose colours, sounds, volume and sensitivity, then save. One keeps the settings in memory, even with your phone off.",
+  "how.tip":"Tip: turn on automatic connection and grant the permissions the app asks for. That way it reconnects on its own every session.",
+  "s1s.t":"Mount One and it switches on","s1s.p":"A quarter turn in the rod pod mount. The app recognises it and connects on its own.",
+  "s2s.t":"Adjust from the bivvy, if needed","s2s.p":"Volume and sensitivity from your phone, with every alarm's battery always in view.",
+  "s3s.t":"On a run, it alerts you","s3s.p":"Different lights and sounds depending on the line direction, on the alarm and on your phone. If your phone is off, One still sounds.",
+  "s4s.t":"At the end, take it off","s4s.p":"It switches off on its own. Charge it over USB-C when the app tells you the battery is low.",
   "on.eyebrow":"Automatic power",
   "on.title":"A quarter turn.<br>It's on.",
   "on.lead":"Turn it 90° on the rod pod mount and it switches on. Take it off and it switches off.",
@@ -633,7 +662,7 @@ const EN = {
   "s.colors":"Colours","s.colors.v":"Matte black, white, silver",
   "s.warranty":"Warranty","s.warranty.v":"2-year legal guarantee",
   "spec.note":"* Battery life measured under these conditions: <span class=\"ph\">[TEST CONDITIONS TO BE DEFINED]</span>. It varies with use of lights and sound.",
-  "about.title":"From healthcare to carp fishing.",
+  "about.title":"From prosthetics to the bank.",
   "about.lead":"For years we designed medical devices that have to work every day, without exception. Now we bring the same care to a bite alarm.",
   "ph.alberto":"[Photo · Alberto]",
   "alberto.role":"Electronics, hardware and software",
@@ -743,6 +772,23 @@ if (reduce) { turn.removeAttribute("autoplay"); turn.pause(); }
 else if ("IntersectionObserver" in window) {
   new IntersectionObserver(es => es.forEach(e => e.isIntersecting ? play() : turn.pause()), { threshold: 0.2 }).observe(turn);
 }
+
+// Come funziona: selettore tra "La prima volta" e "Ogni sessione"
+const tabs = [...document.querySelectorAll('.tabs [role="tab"]')];
+function selectTab(tab, focus){
+  tabs.forEach(t => {
+    const on = t === tab;
+    t.setAttribute("aria-selected", String(on)); t.tabIndex = on ? 0 : -1;
+    document.getElementById(t.getAttribute("aria-controls")).hidden = !on;
+  });
+  if (focus) tab.focus();
+}
+tabs.forEach((t, i) => {
+  t.addEventListener("click", () => selectTab(t));
+  t.addEventListener("keydown", e => {
+    if (e.key === "ArrowRight" || e.key === "ArrowLeft") { e.preventDefault(); selectTab(tabs[(i + (e.key === "ArrowRight" ? 1 : tabs.length - 1)) % tabs.length], true); }
+  });
+});
 
 // Iscrizione alla lista di lancio
 const form = document.getElementById("signup");
