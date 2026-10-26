@@ -132,7 +132,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .swatch{display:flex;align-items:center;gap:10px;font:inherit;font-size:.88rem;font-weight:500;color:var(--mute-light);background:none;border:1px solid transparent;border-radius:999px;padding:8px 16px 8px 9px;cursor:pointer;transition:border-color .15s ease,color .15s ease}
 .swatch:hover{color:var(--fg-light)}
 .swatch[aria-checked="true"]{color:var(--fg-light);border-color:var(--line-light);font-weight:600}
-.swatch i{width:24px;height:24px;border-radius:50%;display:block;box-shadow:inset 0 0 0 1px rgba(0,0,0,.2)}
+.swatch i{width:24px;height:24px;border-radius:50%;display:block;flex:none;box-shadow:inset 0 0 0 1px rgba(0,0,0,.2)}
+.swatch{white-space:nowrap}
+@media (max-width:480px){.swatches{gap:4px;flex-wrap:nowrap}.swatch{padding:6px 10px 6px 6px;gap:7px;font-size:.82rem}.swatch i{width:20px;height:20px}}
 .swatch[aria-checked="true"] i{box-shadow:inset 0 0 0 1px rgba(0,0,0,.2),0 0 0 2px var(--paper),0 0 0 3.5px var(--fg-light)}
 .center{text-align:center;display:grid;justify-items:center;gap:18px}
 .center .lead{margin-inline:auto}
@@ -182,6 +184,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 /* Telefoni */
 .phones{display:flex;justify-content:center;align-items:flex-end;width:100%}
 .phone{width:min(260px,44vw);aspect-ratio:640/1257;max-width:100%;border-radius:clamp(13px,2.5vw,20px);background:#000;padding:clamp(6px,1vw,9px);box-shadow:0 30px 60px -20px rgba(0,0,0,.35),0 0 0 1px rgba(0,0,0,.08)}
+.phone{position:relative}
+.phone::before{content:"";position:absolute;top:calc(clamp(6px,1vw,9px) + 7px);left:50%;width:clamp(7px,1.3vw,10px);aspect-ratio:1;transform:translateX(-50%);border-radius:50%;background:#000;box-shadow:0 0 0 1.5px #1c1c1e;z-index:1}
 .phone img{width:100%;height:100%;object-fit:cover;border-radius:clamp(10px,2.1vw,16px)}
 .phones > * + *{margin-left:-6%;transform:translateY(-10%)}
 .mock{width:min(248px,42vw);height:auto;max-width:100%;filter:drop-shadow(0 30px 40px rgba(0,0,0,.28))}
@@ -223,6 +227,22 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 /* Chiusura */
 .close .center{gap:22px}
 .email{font-size:clamp(1.3rem,4.4vw,2.4rem);font-weight:600;letter-spacing:-.02em;user-select:all;word-break:break-word;margin:0}
+/* Confronto */
+.cmp{max-width:960px;margin:clamp(36px,6vw,64px) auto 0;display:grid}
+.cmp-row{display:grid;grid-template-columns:1fr 1.6fr 1.6fr;gap:clamp(16px,3vw,40px);padding-block:22px;border-top:1px solid #dcdcdb;align-items:baseline}
+.cmp-row > span{min-width:0}
+.cmp-head{border-top:0;padding-block:0 14px;font-size:.8rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--mute-light)}
+.cmp-head .cmp-new{color:var(--fg-light)}
+.cmp-k{font-weight:600;font-size:.95rem}
+.cmp-old{color:var(--mute-light)}
+.cmp-row:not(.cmp-head) .cmp-new{font-weight:600;color:var(--fg-light)}
+@media (max-width:700px){
+  .cmp-head{display:none}
+  .cmp-row{grid-template-columns:1fr;gap:6px}
+  .cmp-k{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mute-light);margin-bottom:4px}
+  .cmp-old::before,.cmp-row:not(.cmp-head) .cmp-new::before{content:attr(data-label);display:block;font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--mute-light);margin-bottom:2px}
+  .cmp-row:not(.cmp-head) .cmp-new{margin-top:8px}
+}
 /* Come funziona: selettore La prima volta / Ogni sessione */
 .tabs{display:inline-flex;gap:4px;padding:4px;margin-top:10px;border-radius:999px;background:var(--mist);border:1px solid var(--line-light)}
 .tabs button{font:inherit;font-size:.92rem;font-weight:600;color:var(--mute-light);background:none;border:0;border-radius:999px;padding:10px 22px;cursor:pointer;transition:background .15s ease,color .15s ease}
@@ -318,8 +338,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <div class="wrap">
     <div class="center">
       <p class="eyebrow" data-i18n="nav.product">Prodotto</p>
-      <h2 data-i18n="prod.title">Nessun pulsante.</h2>
-      <p class="lead" data-i18n="prod.lead">Sul corpo restano luci e suono. Tutto il resto si imposta dall'app.</p>
+      <h2 data-i18n="prod.title">Pensato per non perdere<br>una partenza.</h2>
+      <p class="lead" data-i18n="prod.lead">Nessun pulsante che si blocca o si preme per sbaglio. Sul corpo restano luci e suono, tutto il resto si imposta dall'app.</p>
     </div>
     <div class="views">
       <figure><img class="js-view" data-view="side" src="img/side-black.webp" data-i18n-alt="alt.side" alt="Rever One visto di lato" width="300" height="1300" loading="lazy"><figcaption data-i18n="view.side">Lato</figcaption></figure>
@@ -348,18 +368,55 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     <div class="tabpanel" id="panel-first" role="tabpanel" aria-labelledby="tab-first">
       <ol class="steps">
         <li><span class="n">01</span><h3 data-i18n="f1s.t">Scarichi l'app e crei l'account</h3><p data-i18n="f1s.p">L'account ti serve anche quando cambi telefono.</p></li>
-        <li><span class="n">02</span><h3 data-i18n="f2s.t">Registri i tuoi avvisatori</h3><p data-i18n="f2s.p">Accendi One con un quarto di giro sull'attacco: l'app lo trova e lo registri. Da quel momento lo riconosce e si collega da sola.</p></li>
+        <li><span class="n">02</span><h3 data-i18n="f2s.t">Registri i tuoi avvisatori</h3><p data-i18n="f2s.p">Accendi One sull'attacco: l'app lo trova e lo registri. Da quel momento lo riconosce da sola.</p></li>
         <li><span class="n">03</span><h3 data-i18n="f3s.t">Lo personalizzi una volta</h3><p data-i18n="f3s.p">Per ogni avvisatore scegli colori, suoni, volume e sensibilità, poi salvi. One tiene in memoria le impostazioni, anche a telefono spento.</p></li>
       </ol>
       <p class="small tip" data-i18n="how.tip">Consiglio: attiva la connessione automatica e concedi i permessi che l'app ti chiede. Così a ogni sessione si ricollega da sola.</p>
     </div>
     <div class="tabpanel" id="panel-session" role="tabpanel" aria-labelledby="tab-session" hidden>
       <ol class="steps steps-4">
-        <li><span class="n">01</span><h3 data-i18n="s1s.t">Fissi One e si accende</h3><p data-i18n="s1s.p">Un quarto di giro sull'attacco del rod pod. L'app lo riconosce e si collega da sola.</p></li>
+        <li><span class="n">01</span><h3 data-i18n="s1s.t">Fissi One e si accende</h3><p data-i18n="s1s.p">Lo fissi sull'attacco del rod pod e l'app lo riconosce subito.</p></li>
         <li><span class="n">02</span><h3 data-i18n="s2s.t">Regoli dalla tenda, se serve</h3><p data-i18n="s2s.p">Volume e sensibilità dal telefono, con la batteria di ogni avvisatore sempre sotto controllo.</p></li>
-        <li><span class="n">03</span><h3 data-i18n="s3s.t">Alla partenza ti avvisa</h3><p data-i18n="s3s.p">Luci e suoni diversi a seconda della direzione della lenza, sull'avvisatore e sul telefono. Se il telefono è spento, One suona comunque.</p></li>
+        <li><span class="n">03</span><h3 data-i18n="s3s.t">Alla partenza ti avvisa</h3><p data-i18n="s3s.p">Luci e suoni diversi a seconda della direzione della lenza, sull'avvisatore e sul telefono.</p></li>
         <li><span class="n">04</span><h3 data-i18n="s4s.t">A fine sessione lo togli</h3><p data-i18n="s4s.p">Si spegne da solo. Lo ricarichi in USB-C quando l'app ti avvisa che la batteria è bassa.</p></li>
       </ol>
+    </div>
+  </div>
+</section>
+
+<!-- CONFRONTO: avvisatore tradizionale e Rever One, senza nominare marchi -->
+<section class="band mist" id="confronto">
+  <div class="wrap">
+    <div class="center">
+      <p class="eyebrow" data-i18n="cmp.eyebrow">Cosa cambia</p>
+      <h2 data-i18n="cmp.title">Rispetto a un avvisatore tradizionale.</h2>
+    </div>
+    <div class="cmp" role="table" data-i18n-aria="cmp.aria" aria-label="Confronto tra un avvisatore tradizionale e Rever One">
+      <div class="cmp-row cmp-head" role="row">
+        <span role="columnheader"></span>
+        <span role="columnheader" data-i18n="cmp.old">Avvisatore tradizionale</span>
+        <span role="columnheader" class="cmp-new">Rever One</span>
+      </div>
+      <div class="cmp-row" role="row">
+        <span class="cmp-k" role="rowheader" data-i18n="cmp.r1">Alimentazione</span>
+        <span class="cmp-old" role="cell" data-i18n="cmp.r1o">Pile da 9V, con quelle di scorta in borsa</span>
+        <span class="cmp-new" role="cell" data-i18n="cmp.r1n">Batteria ricaricabile in USB-C, fino a 7 giorni</span>
+      </div>
+      <div class="cmp-row" role="row">
+        <span class="cmp-k" role="rowheader" data-i18n="cmp.r2">Regolazioni</span>
+        <span class="cmp-old" role="cell" data-i18n="cmp.r2o">Pulsanti sull'avvisatore, da raggiungere a mano</span>
+        <span class="cmp-new" role="cell" data-i18n="cmp.r2n">Dall'app, anche dalla tenda</span>
+      </div>
+      <div class="cmp-row" role="row">
+        <span class="cmp-k" role="rowheader" data-i18n="cmp.r3">Impostazioni</span>
+        <span class="cmp-old" role="cell" data-i18n="cmp.r3o">Non vedi cosa hai impostato</span>
+        <span class="cmp-new" role="cell" data-i18n="cmp.r3n">Sempre visibili sul telefono, salvate su One</span>
+      </div>
+      <div class="cmp-row" role="row">
+        <span class="cmp-k" role="rowheader" data-i18n="cmp.r4">Accensione</span>
+        <span class="cmp-old" role="cell" data-i18n="cmp.r4o">Un interruttore da ricordare a fine sessione</span>
+        <span class="cmp-new" role="cell" data-i18n="cmp.r4n">Si accende quando lo fissi, si spegne quando lo togli</span>
+      </div>
     </div>
   </div>
 </section>
@@ -393,13 +450,13 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
       <h2 data-i18n="app.title">Regoli tutto dalla tenda.</h2>
       <p class="lead" data-i18n="app.lead">Volume, tono, colore e sensibilità di ogni avvisatore si cambiano dall'app, senza alzarti. E vedi sempre cosa hai impostato.</p>
       <div class="fact">
-        <p><strong data-i18n="app.fact">Se il telefono si spegne, One suona comunque.</strong></p>
-        <p class="small" data-i18n="app.factsub">Anche fuori portata l'avvisatore lavora da solo. Perdi solo le notifiche in app.</p>
+        <p><strong data-i18n="app.fact">Ogni avvisatore ha il suo suono e il suo colore.</strong></p>
+        <p class="small" data-i18n="app.factsub">Così, di notte, capisci subito quale canna è partita.</p>
       </div>
     </div>
     <div class="media">
       <div class="phones">
-        <img class="mock" src="img/app-settings-mock.webp" data-i18n-alt="alt.app1" alt="App Rever: personalizzazione di un avvisatore, con luci posteriori, set di colori e set di suoni" width="700" height="1444" loading="lazy">
+        <div class="phone"><img src="img/app-settings.webp" data-i18n-alt="alt.app1" alt="App Rever: personalizzazione di un avvisatore, con luci posteriori, set di colori e set di suoni" width="640" height="1257" loading="lazy"></div>
         <div class="phone"><div class="swap">
           <img src="img/app-nebula.webp" data-i18n-alt="alt.app2" alt="App Rever: avvisatore con set di colori Nebula" width="640" height="1257" loading="lazy">
           <img src="img/app-lunar.webp" alt="" aria-hidden="true" width="640" height="1257" loading="lazy">
@@ -470,16 +527,18 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     <p class="eyebrow" data-i18n="spec.eyebrow">Specifiche</p>
     <dl class="specs">
       <div><dt data-i18n="s.conn">Connessione</dt><dd><span data-i18n="s.conn.v">Bluetooth Low Energy, fino a 60 m</span><span class="small" data-i18n="s.conn.n">In spazio libero, senza ostacoli</span></dd></div>
-      <div><dt data-i18n="s.alert">Avviso</dt><dd data-i18n="s.alert.v">Luce, suono e notifica in app, personalizzabili</dd></div>
+      <div><dt data-i18n="s.alert">Avviso</dt><dd data-i18n="s.alert.v">Luce, suono fino a 82 dB a 1 m e notifica in app</dd></div>
       <div><dt data-i18n="s.dir">Rilevamento</dt><dd data-i18n="s.dir.v">Direzione della lenza: in partenza e in drop back</dd></div>
-      <div><dt data-i18n="s.led">Luci</dt><dd data-i18n="s.led.v">LED frontali e posteriori, automatici al buio, modalità faro</dd></div>
+      <div><dt data-i18n="s.led">Luci</dt><dd data-i18n="s.led.v">LED frontali e posteriori in 7 colori combinabili, automatici al buio, modalità faro</dd></div>
       <div><dt data-i18n="s.bat">Autonomia</dt><dd data-i18n="s.bat.v">Fino a 7 giorni*</dd></div>
       <div><dt data-i18n="s.charge">Ricarica</dt><dd data-i18n="s.charge.v">USB-C con attacco magnetico, 80% in 30 minuti. Compatibile con i caricatori per smartphone</dd></div>
-      <div><dt data-i18n="s.mount">Attacco</dt><dd data-i18n="s.mount.v">Universale per rod pod</dd></div>
-      <div><dt data-i18n="s.size">Dimensioni</dt><dd>140 × 60 × 30 mm</dd></div>
+      <div><dt data-i18n="s.mount">Attacco</dt><dd data-i18n="s.mount.v">Filettatura standard 3/8" BSF</dd></div>
+      <div><dt data-i18n="s.size">Dimensioni e peso</dt><dd>140 × 60 × 30 mm, 150 g</dd></div>
+      <div><dt data-i18n="s.temp">Temperatura di utilizzo</dt><dd>da −30 °C a +65 °C</dd></div>
+      <div><dt data-i18n="s.sets">Personalizzazione</dt><dd data-i18n="s.sets.v">5 set di colori e 5 set di suoni preimpostati</dd></div>
       <div><dt data-i18n="s.setup">Configurazione</dt><dd data-i18n="s.setup.v">Fino a 4 avvisatori per rod pod, fino a 2 rod pod</dd></div>
       <div><dt data-i18n="s.box">Nella confezione</dt><dd data-i18n="s.box.v">Un avvisatore, attacco per rod pod, sistema di ricarica magnetico</dd></div>
-      <div><dt data-i18n="s.colors">Colori</dt><dd data-i18n="s.colors.v">Nero opaco, bianco, silver</dd></div>
+      <div><dt data-i18n="s.colors">Colori del corpo</dt><dd data-i18n="s.colors.v">Nero opaco, bianco, silver</dd></div>
       <div><dt data-i18n="s.warranty">Garanzia</dt><dd data-i18n="s.warranty.v">Garanzia legale di 2 anni</dd></div>
     </dl>
     <p class="small note" data-i18n="spec.note">* Autonomia misurata in queste condizioni: <span class="ph">[CONDIZIONI DI MISURA DA DEFINIRE]</span>. Varia in base all'uso di luci e suoni.</p>
@@ -492,7 +551,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     <div class="about-intro">
       <p class="eyebrow" data-i18n="nav.about">Chi siamo</p>
       <h2 data-i18n="about.title">Dal medicale alla pesca.</h2>
-      <p class="lead" style="max-width:52ch" data-i18n="about.lead">Per anni abbiamo progettato dispositivi medicali che devono funzionare ogni giorno, senza eccezioni. Ora mettiamo la stessa cura in un avvisatore.</p>
+      <p class="lead" style="max-width:52ch" data-i18n="about.lead">One nasce da un'idea di Alberto, grande appassionato di carp fishing: dalle sue notti in riva e da quello che gli avvisatori di oggi non gli davano. Per anni abbiamo progettato dispositivi medicali che devono funzionare ogni giorno, senza eccezioni. Ora mettiamo la stessa cura in un avvisatore.</p>
     </div>
     <div class="founders">
       <article class="founder">
@@ -523,9 +582,10 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
       <details><summary data-i18n="q2">E se il telefono si scarica o va fuori portata?</summary><p data-i18n="a2">One continua a suonare e a illuminarsi in autonomia. Perdi solo le notifiche sul telefono, che tornano appena l'app si ricollega.</p></details>
       <details><summary data-i18n="q3">Quanto dura una carica?</summary><p data-i18n="a3">Fino a 7 giorni, a seconda di quanto suona e di quanto usi le luci. Si ricarica all'80% in 30 minuti in USB-C, anche con il caricatore del telefono.</p></details>
       <details><summary data-i18n="q4">È resistente alla pioggia?</summary><p data-i18n="a4">I test di resistenza all'acqua sono in corso. Pubblicheremo il risultato appena saranno conclusi.</p></details>
-      <details><summary data-i18n="q5">È compatibile con il mio rod pod?</summary><p data-i18n="a5">L'attacco è pensato per i rod pod più diffusi. Filettatura e compatibilità verificate saranno indicate a breve nelle specifiche.</p></details>
+      <details><summary data-i18n="q5">È compatibile con il mio rod pod?</summary><p data-i18n="a5">Sì, se il tuo rod pod o i tuoi bankstick hanno la filettatura standard 3/8" BSF, quella dell'attrezzatura da carpa.</p></details>
       <details><summary data-i18n="q6">Quanti avvisatori posso collegare?</summary><p data-i18n="a6">Fino a 4 avvisatori per rod pod, e puoi attivare un secondo rod pod dalle impostazioni dell'app.</p></details>
       <details><summary data-i18n="q7">Quanto costa e quando sarà disponibile?</summary><p data-i18n="a7">Prezzo e data non sono ancora definiti. Iscrivendoti alla lista di lancio li ricevi prima di tutti.</p></details>
+      <details><summary data-i18n="q9">Posso usarlo con swinger e hanger?</summary><p data-i18n="a9">Sì, con quelli tradizionali. One non ha la presa jack per gli swinger luminosi: le sue luci bastano a vedere la partenza anche di notte.</p></details>
       <details><summary data-i18n="q8">Che garanzia ha?</summary><p data-i18n="a8">La garanzia legale di 2 anni prevista per tutti i prodotti venduti ai consumatori.</p></details>
     </div>
   </div>
@@ -588,7 +648,7 @@ const EN = {
   "q2":"What if my phone dies or goes out of range?","a2":"One keeps sounding and lighting up on its own. You only lose the phone notifications, which come back as soon as the app reconnects.",
   "q3":"How long does a charge last?","a3":"Up to 7 days, depending on how often it sounds and how much you use the lights. It charges to 80% in 30 minutes over USB-C, even with your phone charger.",
   "q4":"Is it rainproof?","a4":"Water resistance tests are under way. We will publish the result as soon as they are complete.",
-  "q5":"Will it fit my rod pod?","a5":"The mount is designed for the most common rod pods. Thread size and verified compatibility will be listed in the specifications soon.",
+  "q5":"Will it fit my rod pod?","a5":"Yes, if your rod pod or banksticks use the standard 3/8\" BSF thread found on carp tackle.","q9":"Can I use it with swingers and hangers?","a9":"Yes, with traditional ones. One has no jack socket for illuminated swingers: its own lights are enough to see a run, even at night.",
   "q6":"How many alarms can I connect?","a6":"Up to 4 alarms per rod pod, and you can switch on a second rod pod in the app settings.",
   "q7":"How much will it cost, and when?","a7":"Price and date are not set yet. Join the launch list and you will get them first.",
   "q8":"What warranty does it have?","a8":"The 2-year legal guarantee that covers all products sold to consumers.",
@@ -603,20 +663,26 @@ const EN = {
   "msg.soon":"Sign-ups open very soon. In the meantime, write to us at the address below.",
   "hero.discover":"Discover One",
   "alt.hero":"Rever One, black bite alarm with front LEDs on",
-  "prod.title":"No buttons.",
-  "prod.lead":"The body keeps the lights and the sound. Everything else is set in the app.",
+  "prod.title":"Designed so you<br>never miss a run.",
+  "prod.lead":"No buttons to jam or press by mistake. The body keeps the lights and the sound; everything else is set in the app.",
   "alt.side":"Rever One, side view","alt.three":"Rever One, three-quarter view","alt.front":"Rever One, front view with LEDs on",
   "view.side":"Side","view.three":"Three-quarter","view.front":"Front",
   "color.black":"Matte black","color.white":"White",
   "how.title":"Set it up once.<br>Then mount it and fish.",
+  "cmp.eyebrow":"What changes","cmp.title":"Compared with a traditional bite alarm.","cmp.aria":"Comparison between a traditional bite alarm and Rever One",
+  "cmp.old":"Traditional bite alarm",
+  "cmp.r1":"Power","cmp.r1o":"9V batteries, with spares in your bag","cmp.r1n":"Rechargeable over USB-C, up to 7 days",
+  "cmp.r2":"Adjustments","cmp.r2o":"Buttons on the alarm, within arm's reach","cmp.r2n":"From the app, even from the bivvy",
+  "cmp.r3":"Settings","cmp.r3o":"You can't see what you've set","cmp.r3n":"Always visible on your phone, saved on One",
+  "cmp.r4":"Power on/off","cmp.r4o":"A switch to remember at the end of the session","cmp.r4n":"Switches on when you mount it, off when you take it off",
   "aria.how":"When you use it","how.tab1":"The first time","how.tab2":"Every session",
   "f1s.t":"Download the app and create your account","f1s.p":"You'll also need the account when you change phone.",
-  "f2s.t":"Register your alarms","f2s.p":"Switch One on with a quarter turn in the mount: the app finds it and you register it. From then on it recognises it and connects on its own.",
+  "f2s.t":"Register your alarms","f2s.p":"Switch One on in the mount: the app finds it and you register it. From then on it recognises it on its own.",
   "f3s.t":"Customise it once","f3s.p":"For each alarm choose colours, sounds, volume and sensitivity, then save. One keeps the settings in memory, even with your phone off.",
   "how.tip":"Tip: turn on automatic connection and grant the permissions the app asks for. That way it reconnects on its own every session.",
-  "s1s.t":"Mount One and it switches on","s1s.p":"A quarter turn in the rod pod mount. The app recognises it and connects on its own.",
+  "s1s.t":"Mount One and it switches on","s1s.p":"Mount it on the rod pod and the app recognises it straight away.",
   "s2s.t":"Adjust from the bivvy, if needed","s2s.p":"Volume and sensitivity from your phone, with every alarm's battery always in view.",
-  "s3s.t":"On a run, it alerts you","s3s.p":"Different lights and sounds depending on the line direction, on the alarm and on your phone. If your phone is off, One still sounds.",
+  "s3s.t":"On a run, it alerts you","s3s.p":"Different lights and sounds depending on the line direction, on the alarm and on your phone.",
   "s4s.t":"At the end, take it off","s4s.p":"It switches off on its own. Charge it over USB-C when the app tells you the battery is low.",
   "on.eyebrow":"Automatic power",
   "on.title":"A quarter turn.<br>It's on.",
@@ -627,8 +693,8 @@ const EN = {
   "app.eyebrow":"All from your phone",
   "app.title":"Adjust everything from the bivvy.",
   "app.lead":"Volume, tone, colour and sensitivity of each alarm change in the app, without getting up. And you always see what you've set.",
-  "app.fact":"If your phone dies, One still sounds.",
-  "app.factsub":"Even out of range the alarm keeps working on its own. You only lose the app notifications.",
+  "app.fact":"Every alarm has its own sound and colour.",
+  "app.factsub":"So at night you know straight away which rod is away.",
   "alt.app1":"Rever app: customising one alarm, with rear lights, colour set and sound set",
   "alt.app2":"Rever app: alarm with the Nebula colour set",
   "alt.app3":"Rever app: rod pod with one alarm and its battery level",
@@ -645,13 +711,13 @@ const EN = {
   "f3.t":"Anti-theft","f3.p":"If it gets stolen, you report it in the app and Rever locks it.",
   "spec.eyebrow":"Specifications",
   "s.conn":"Connection","s.conn.v":"Bluetooth Low Energy, up to 60 m","s.conn.n":"In open space, without obstacles",
-  "s.alert":"Alert","s.alert.v":"Light, sound and app notification, all customisable",
+  "s.alert":"Alert","s.alert.v":"Light, sound up to 82 dB at 1 m and app notification",
   "s.dir":"Detection","s.dir.v":"Line direction: runs and drop backs",
-  "s.led":"Lights","s.led.v":"Front and rear LEDs, automatic in the dark, beacon mode",
+  "s.led":"Lights","s.led.v":"Front and rear LEDs in 7 combinable colours, automatic in the dark, beacon mode",
   "s.bat":"Battery life","s.bat.v":"Up to 7 days*",
   "s.charge":"Charging","s.charge.v":"USB-C with magnetic connector, 80% in 30 minutes. Works with smartphone chargers",
-  "s.mount":"Mount","s.mount.v":"Universal rod pod mount",
-  "s.size":"Size",
+  "s.mount":"Mount","s.mount.v":"Standard 3/8\" BSF thread",
+  "s.size":"Size and weight","s.temp":"Operating temperature","s.sets":"Customisation","s.sets.v":"5 preset colour sets and 5 preset sound sets",
   "s.setup":"Setup","s.setup.v":"Up to 4 alarms per rod pod, up to 2 rod pods",
   "conn.eyebrow":"Always connected","conn.title":"The app keeps working with the screen off.",
   "conn.lead":"It stays active in the background, looks for your alarms and reconnects on its own.",
@@ -659,11 +725,11 @@ const EN = {
   "alt.app4":"Rever app: advanced settings, with always-on app, automatic scan and automatic connection",
   "alt.app5":"My Rever notification: automatic reconnection service active",
   "s.box":"In the box","s.box.v":"One alarm, rod pod mount, magnetic charging system",
-  "s.colors":"Colours","s.colors.v":"Matte black, white, silver",
+  "s.colors":"Body colours","s.colors.v":"Matte black, white, silver",
   "s.warranty":"Warranty","s.warranty.v":"2-year legal guarantee",
   "spec.note":"* Battery life measured under these conditions: <span class=\"ph\">[TEST CONDITIONS TO BE DEFINED]</span>. It varies with use of lights and sound.",
   "about.title":"From medical devices to fishing.",
-  "about.lead":"For years we designed medical devices that have to work every day, without exception. Now we bring the same care to a bite alarm.",
+  "about.lead":"One started as an idea of Alberto's, a keen carp angler: from his nights on the bank and from everything today's bite alarms weren't giving him. For years we have designed medical devices that have to work every day, without exception. Now we bring the same care to a bite alarm.",
   "ph.alberto":"[Photo · Alberto]",
   "alberto.role":"Electronics, hardware and software",
   "alberto.bio":"Biomedical engineer with a PhD in Bioengineering on machine-learning control of prostheses. For over ten years he has built electronics, firmware and CE-marked medical devices for bionic prostheses, across research, IIT and automotive R&D, and leads their verification and validation.",
@@ -698,6 +764,8 @@ function setLang(next, remember){
   document.querySelectorAll("[data-i18n-aria]").forEach(el => { el.setAttribute("aria-label", t(el.dataset.i18nAria)); });
   document.querySelectorAll("[data-i18n-ph]").forEach(el => { el.placeholder = t(el.dataset.i18nPh); });
   const loc = document.getElementById("signup-locale"); if (loc) loc.value = lang;
+  document.querySelectorAll(".cmp-old").forEach(el => el.dataset.label = lang === "en" ? "Traditional" : "Tradizionale");
+  document.querySelectorAll(".cmp-row:not(.cmp-head) .cmp-new").forEach(el => el.dataset.label = "Rever One");
   document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
   // Il link email si attiva solo con un indirizzo vero, e si apre fuori dalla pagina.
   const m = MAIL[lang], ready = !EMAIL.startsWith("[");
